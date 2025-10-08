@@ -6,25 +6,38 @@
 
 <ion-content>
   <form [formGroup]="form" (ngSubmit)="onSave()" class="ion-padding">
-    <ion-item><ion-input formControlName="name" placeholder="Nombre"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="lastName" placeholder="Apellido"></ion-input></ion-item>
+
+    <ion-label>Nombre actual: {{ form.get('name')?.value }}</ion-label>
+    <ion-item><ion-input formControlName="name" placeholder="Nuevo nombre"></ion-input></ion-item>
+
+    <ion-label>Apellido actual: {{ form.get('lastName')?.value }}</ion-label>
+    <ion-item><ion-input formControlName="lastName" placeholder="Nuevo apellido"></ion-input></ion-item>
+
+    <ion-label>Fecha de nacimiento actual: {{ form.get('birthDate')?.value }}</ion-label>
     <ion-item><ion-input formControlName="birthDate" type="date"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="country" placeholder="País"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="city" placeholder="Ciudad"></ion-input></ion-item>
+
+    <ion-label>País actual: {{ form.get('country')?.value }}</ion-label>
+    <ion-item><ion-input formControlName="country" placeholder="Nuevo país"></ion-input></ion-item>
+
+    <ion-label>Ciudad actual: {{ form.get('city')?.value }}</ion-label>
+    <ion-item><ion-input formControlName="city" placeholder="Nueva ciudad"></ion-input></ion-item>
+
+    <ion-label>Género actual: {{ form.get('gender')?.value }}</ion-label>
     <ion-item>
-      <ion-select formControlName="gender" placeholder="Género">
+      <ion-select formControlName="gender" placeholder="Nuevo género">
         <ion-select-option value="female">Femenino</ion-select-option>
         <ion-select-option value="male">Masculino</ion-select-option>
         <ion-select-option value="other">Otro</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-label>Mostrar género en perfil: {{ form.get('showGenderProfile')?.value ? 'Sí' : 'No' }}</ion-label>
     <ion-item>
       <ion-checkbox formControlName="showGenderProfile">Mostrar género en perfil</ion-checkbox>
     </ion-item>
-    <ion-item><ion-input formControlName="passions" placeholder="Pasiones (coma separada)"></ion-input></ion-item>
 
-    <ion-button expand="full" (click)="pickPhoto()">Seleccionar Foto</ion-button>
-    <ion-img *ngIf="previewUrl" [src]="previewUrl" class="ion-margin-top"></ion-img>
+    <ion-label>Pasiones actuales: {{ form.get('passions')?.value }}</ion-label>
+    <ion-item><ion-input formControlName="passions" placeholder="Nuevas pasiones (coma separada)"></ion-input></ion-item>
 
     <ion-text color="danger" *ngIf="errorMessage">
       <p>{{ errorMessage }}</p>

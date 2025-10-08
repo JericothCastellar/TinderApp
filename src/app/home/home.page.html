@@ -8,5 +8,6 @@
   <h2>Bienvenido</h2>
   <p *ngIf="email">Tu sesión: {{ email }}</p>
 
-  <ion-button expand="full" (click)="logout()">Cerrar sesión</ion-button>
+  <ion-button expand="full" routerLink="/profile">Ir a mi perfil</ion-button>
+  <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
 </ion-content>

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { UserProfile } from 'src/app/shared/models/user.model';
-import { FilePicker } from '@capawesome/capacitor-file-picker';
 
 @Component({
   selector: 'app-update-profile',
@@ -10,14 +10,16 @@ import { FilePicker } from '@capawesome/capacitor-file-picker';
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss']
 })
-export class UpdatePage {
+export class UpdatePage implements OnInit {
   form: FormGroup;
-  previewUrl: string | null = null;
-  selectedFile: Blob | null = null;
   loading = false;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private firebase: FirebaseService) {
+  constructor(
+    private fb: FormBuilder,
+    private firebase: FirebaseService,
+    private auth: AuthService
+  ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -30,16 +32,29 @@ export class UpdatePage {
     });
   }
 
-  async pickPhoto() {
+  async ngOnInit() {
+    await this.loadUserProfile();
+  }
+
+  async loadUserProfile() {
+    this.loading = true;
     try {
-      const result = await FilePicker.pickFiles({ types: ['image/*'] });
-      const file = result.files[0];
-      if (file.path) {
-        this.selectedFile = await fetch(file.path).then(res => res.blob());
-        this.previewUrl = file.path;
-      }
+      const profile = await this.firebase.getCurrentUserProfile();
+
+      this.form.patchValue({
+        name: profile.name,
+        lastName: profile.lastName,
+        birthDate: profile.birthDate,
+        country: profile.country,
+        city: profile.city,
+        gender: profile.gender,
+        showGenderProfile: profile.showGenderProfile,
+        passions: profile.passions?.map(p => p.category).join(', ') || ''
+      });
     } catch (err) {
-      this.errorMessage = 'Error al seleccionar imagen';
+      this.errorMessage = 'No se pudo cargar el perfil';
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -48,19 +63,25 @@ export class UpdatePage {
     this.errorMessage = null;
 
     const raw = this.form.value;
-    const passions = raw.passions.split(',').map((p: string) => ({ category: p.trim() }));
+    const passions = raw.passions
+      ? raw.passions.split(',').map((p: string) => ({ category: p.trim() }))
+      : [];
+
+    const uid = this.auth.currentUserId;
+    if (!uid) {
+      this.errorMessage = 'No hay sesión activa';
+      this.loading = false;
+      return;
+    }
+
     const profile: UserProfile = {
+      uid,
       ...raw,
       passions,
-      photos: []
+      photos: [] 
     };
 
     try {
-      if (this.selectedFile) {
-        const photoUrl = await this.firebase.uploadProfilePhoto(this.selectedFile, 'profile.jpg');
-        profile.photos.push(photoUrl);
-      }
-
       await this.firebase.saveUserProfile(profile);
     } catch (err: any) {
       this.errorMessage = err.message || 'Error al guardar perfil';

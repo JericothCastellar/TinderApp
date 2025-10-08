@@ -16,16 +16,25 @@ export class FirebaseService {
     const uid = this.auth.currentUserId;
     if (!uid) throw new Error('No user logged in');
     const userRef = doc(this.firestore, 'users', uid);
-    await setDoc(userRef, profile);
+    await setDoc(userRef, profile, { merge: true });
   }
 
-  async getUserProfile(): Promise<UserProfile | null> {
+  async getCurrentUserProfile(): Promise<UserProfile> {
     const uid = this.auth.currentUserId;
-    if (!uid) return null;
+    if (!uid) throw new Error('No user logged in');
+    const userRef = doc(this.firestore, 'users', uid);
+    const snapshot = await getDoc(userRef);
+    if (!snapshot.exists()) throw new Error('Profile not found');
+    return snapshot.data() as UserProfile;
+  }
+
+
+  async getUserProfile(uid: string): Promise<UserProfile | null> {
     const userRef = doc(this.firestore, 'users', uid);
     const snapshot = await getDoc(userRef);
     return snapshot.exists() ? (snapshot.data() as UserProfile) : null;
   }
+
 
   async uploadProfilePhoto(file: Blob, filename: string): Promise<string> {
     const uid = this.auth.currentUserId;
@@ -35,6 +44,7 @@ export class FirebaseService {
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
   }
+
 
   async getAllProfiles(): Promise<UserProfile[]> {
     const profilesRef = collection(this.firestore, 'users');

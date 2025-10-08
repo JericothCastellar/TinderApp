@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="form" (ngSubmit)="onLogin()">
+  <form [formGroup]="form" (ngSubmit)="onLogin()" class="ion-padding">
     <ion-item>
       <ion-input formControlName="email" placeholder="Email" type="email"></ion-input>
     </ion-item>
@@ -24,4 +24,8 @@
 
     <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
   </form>
+
+  <ion-button expand="full" fill="outline" color="medium" routerLink="/register" class="ion-margin-top">
+    ¿No tienes cuenta? Regístrate
+  </ion-button>
 </ion-content>

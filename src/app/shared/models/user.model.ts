@@ -1,16 +1,14 @@
-
 export interface UserProfile {
+  uid: string;
   name: string;
   lastName: string;
   birthDate: string;
-  email: string;
-  password?: string;
   country: string;
   city: string;
-  gender: 'male' | 'female' | 'other';
+  gender: string;
   showGenderProfile: boolean;
-  passions: Passion[];
-  photos: string[]; 
+  passions: { category: string }[];
+  photos: string[];
 }
 
 export interface Passion {
