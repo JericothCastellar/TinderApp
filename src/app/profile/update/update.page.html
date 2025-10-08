@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Actualizar Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSave()" class="ion-padding">
+    <ion-item><ion-input formControlName="name" placeholder="Nombre"></ion-input></ion-item>
+    <ion-item><ion-input formControlName="lastName" placeholder="Apellido"></ion-input></ion-item>
+    <ion-item><ion-input formControlName="birthDate" type="date"></ion-input></ion-item>
+    <ion-item><ion-input formControlName="country" placeholder="País"></ion-input></ion-item>
+    <ion-item><ion-input formControlName="city" placeholder="Ciudad"></ion-input></ion-item>
+    <ion-item>
+      <ion-select formControlName="gender" placeholder="Género">
+        <ion-select-option value="female">Femenino</ion-select-option>
+        <ion-select-option value="male">Masculino</ion-select-option>
+        <ion-select-option value="other">Otro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox formControlName="showGenderProfile">Mostrar género en perfil</ion-checkbox>
+    </ion-item>
+    <ion-item><ion-input formControlName="passions" placeholder="Pasiones (coma separada)"></ion-input></ion-item>
+
+    <ion-button expand="full" (click)="pickPhoto()">Seleccionar Foto</ion-button>
+    <ion-img *ngIf="previewUrl" [src]="previewUrl" class="ion-margin-top"></ion-img>
+
+    <ion-text color="danger" *ngIf="errorMessage">
+      <p>{{ errorMessage }}</p>
+    </ion-text>
+
+    <ion-button expand="full" type="submit" [disabled]="form.invalid || loading">
+      Guardar Perfil
+    </ion-button>
+
+    <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
+  </form>
+</ion-content>

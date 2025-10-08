@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onRegister()" class="ion-padding">
+    <ion-item>
+      <ion-input formControlName="email" placeholder="Email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input formControlName="password" placeholder="Contraseña" type="password"></ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="errorMessage">
+      <p class="ion-padding">{{ errorMessage }}</p>
+    </ion-text>
+
+    <ion-button expand="full" type="submit" [disabled]="form.invalid || loading">
+      Registrarse
+    </ion-button>
+
+    <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
+  </form>
+</ion-content>
