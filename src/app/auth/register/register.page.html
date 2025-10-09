@@ -25,6 +25,21 @@
     </ion-item>
     <ion-item><ion-input formControlName="passions" placeholder="Pasiones (coma separada)"></ion-input></ion-item>
 
+    <ion-item>
+      <ion-button expand="full" (click)="selectImageMobile()">Seleccionar imagen (Android)</ion-button>
+    </ion-item>
+
+    <ion-item>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+    </ion-item>
+
+    <ion-item *ngIf="selectedImage">
+      <ion-thumbnail slot="start">
+        <img [src]="selectedImage" />
+      </ion-thumbnail>
+      <ion-label>Imagen seleccionada</ion-label>
+    </ion-item>
+
     <ion-text color="danger" *ngIf="errorMessage">
       <p>{{ errorMessage }}</p>
     </ion-text>

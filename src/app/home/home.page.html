@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Home</ion-title>
+    <ion-buttons slot="end">
+      <ion-avatar class="profile-avatar" *ngIf="user?.photos?.length">
+        <img [src]="user?.photos?.[0]" />
+      </ion-avatar>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
