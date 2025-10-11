@@ -13,34 +13,41 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:label">
+        <receiver
+            android:name=".MatchLauncherWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/match_launcher_widget_info" />
+        </receiver>
 
         <!-- Capacitor Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBarLaunch"
-            android:launchMode="singleTask"
-            android:exported="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
             android:windowSoftInputMode="adjustResize"
             tools:replace="android:theme,android:configChanges">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Matching View Activity -->
+        </activity> <!-- Matching View Activity -->
         <activity
             android:name=".MatchingActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <!-- FileProvider for image access -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- FileProvider for image access -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -51,4 +58,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+
 </manifest>
