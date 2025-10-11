@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngFor="let msg of messages">
+    <div [ngClass]="msg.senderUid === currentUserId ? 'sent' : 'received'">
+      <p>{{ msg.text }}</p>
+      <small>{{ msg.timestamp | date:'shortTime' }}</small>
+    </div>
+  </div>
+</ion-content>

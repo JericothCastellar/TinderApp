@@ -15,6 +15,9 @@
 
   <ion-button expand="full" routerLink="/profile">Ir a mi perfil</ion-button>
   <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
-  <ion-button routerLink="/matching">Ir a Matching</ion-button>
+  <ion-button expand="full" routerLink="/matching">Ir a Matching</ion-button>
 
+  <ion-button expand="full" color="primary" *ngIf="hasChat" routerLink="/chat">
+    Ir al Chat
+  </ion-button>
 </ion-content>

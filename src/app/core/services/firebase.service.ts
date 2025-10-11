@@ -58,6 +58,18 @@ export class FirebaseService {
       to: toUid,
       timestamp: new Date().toISOString()
     });
-  }
+  }  
+
+  
+async hasMatch(uid: string): Promise<boolean> {
+  const matchesRef = collection(this.firestore, 'matches');
+  const snapshot = await getDocs(matchesRef);
+  return snapshot.docs.some(doc => {
+    const data = doc.data();
+    return data['from'] === uid || data['to'] === uid;
+  });
+}
+
+
 
 }
