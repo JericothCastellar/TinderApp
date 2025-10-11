@@ -23,7 +23,16 @@
     <ion-item>
       <ion-checkbox formControlName="showGenderProfile">Mostrar género en perfil</ion-checkbox>
     </ion-item>
-    <ion-item><ion-input formControlName="passions" placeholder="Pasiones (coma separada)"></ion-input></ion-item>
+
+    <ion-item>
+      <ion-label>Pasiones</ion-label>
+    </ion-item>
+    <ion-chip *ngFor="let passion of availablePassions"
+              [outline]="true"
+              [color]="form.value.passions.includes(passion) ? 'primary' : 'medium'"
+              (click)="togglePassion(passion)">
+      <ion-label>{{ passion }}</ion-label>
+    </ion-chip>
 
     <ion-item>
       <ion-button expand="full" (click)="selectImageMobile()">Seleccionar imagen (Android)</ion-button>

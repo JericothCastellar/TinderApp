@@ -15,6 +15,12 @@ export class UpdatePage implements OnInit {
   loading = false;
   errorMessage: string | null = null;
 
+  availablePassions: string[] = [
+    'Harry Potter', 'Music', 'Video games', 'Camping', 'Beer', 'Yoga', 'Running',
+    'Travel', 'Instagram', 'Gym', 'J-Pop', 'K-Pop', 'Skating', 'Reading', 'Lo-Fi',
+    'Backpacking', 'Football', 'Books', 'Hiking', 'Meme', 'Cooking'
+  ];
+
   constructor(
     private fb: FormBuilder,
     private firebase: FirebaseService,
@@ -28,7 +34,7 @@ export class UpdatePage implements OnInit {
       city: ['', Validators.required],
       gender: ['', Validators.required],
       showGenderProfile: [true],
-      passions: ['']
+      passions: [[]] 
     });
   }
 
@@ -40,6 +46,7 @@ export class UpdatePage implements OnInit {
     this.loading = true;
     try {
       const profile = await this.firebase.getCurrentUserProfile();
+      const passions = profile.passions?.map(p => p.category) || [];
 
       this.form.patchValue({
         name: profile.name,
@@ -49,7 +56,7 @@ export class UpdatePage implements OnInit {
         city: profile.city,
         gender: profile.gender,
         showGenderProfile: profile.showGenderProfile,
-        passions: profile.passions?.map(p => p.category).join(', ') || ''
+        passions
       });
     } catch (err) {
       this.errorMessage = 'No se pudo cargar el perfil';
@@ -58,13 +65,21 @@ export class UpdatePage implements OnInit {
     }
   }
 
+  togglePassion(passion: string) {
+    const current = this.form.value.passions || [];
+    const updated = current.includes(passion)
+      ? current.filter((p: string) => p !== passion)
+      : [...current, passion];
+    this.form.patchValue({ passions: updated });
+  }
+
   async onSave() {
     this.loading = true;
     this.errorMessage = null;
 
     const raw = this.form.value;
-    const passions = raw.passions
-      ? raw.passions.split(',').map((p: string) => ({ category: p.trim() }))
+    const passions = Array.isArray(raw.passions)
+      ? raw.passions.map((p: string) => ({ category: p }))
       : [];
 
     const uid = this.auth.currentUserId;

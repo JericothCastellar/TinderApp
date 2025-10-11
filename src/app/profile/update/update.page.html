@@ -36,8 +36,16 @@
       <ion-checkbox formControlName="showGenderProfile">Mostrar género en perfil</ion-checkbox>
     </ion-item>
 
-    <ion-label>Pasiones actuales: {{ form.get('passions')?.value }}</ion-label>
-    <ion-item><ion-input formControlName="passions" placeholder="Nuevas pasiones (coma separada)"></ion-input></ion-item>
+    <ion-label>Pasiones actuales:</ion-label>
+    <ion-text>{{ form.value.passions.join(', ') }}</ion-text>
+
+    <ion-label class="ion-margin-top">Selecciona nuevas pasiones:</ion-label>
+    <ion-chip *ngFor="let passion of availablePassions"
+              [outline]="true"
+              [color]="form.value.passions.includes(passion) ? 'primary' : 'medium'"
+              (click)="togglePassion(passion)">
+      <ion-label>{{ passion }}</ion-label>
+    </ion-chip>
 
     <ion-text color="danger" *ngIf="errorMessage">
       <p>{{ errorMessage }}</p>

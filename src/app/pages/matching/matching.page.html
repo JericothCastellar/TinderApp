@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Matching</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="profiles.length > 0">
+    <ion-card>
+      <img [src]="profiles[currentIndex].photos[0]" />
+      <ion-card-header>
+        <ion-card-title>
+          {{ profiles[currentIndex].name }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-chip *ngFor="let passion of profiles[currentIndex].passions">
+          {{ passion.category }}
+        </ion-chip>
+        <ion-button expand="full" color="danger" (click)="onMatch(profiles[currentIndex])">
+          ♥ Me gusta
+        </ion-button>
+        <ion-button expand="full" fill="outline" (click)="nextSlide()">
+          Siguiente
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="profiles.length === 0">
+    <ion-text color="medium">
+      <p class="ion-padding">No hay perfiles disponibles.</p>
+    </ion-text>
+  </ng-container>
+</ion-content>

@@ -12,7 +12,7 @@ export class FirebaseService {
     private firestore: Firestore,
     private storage: Storage,
     private auth: AuthService
-  ) {}
+  ) { }
 
   async saveUserProfile(profile: UserProfile): Promise<void> {
     const uid = this.auth.currentUserId;
@@ -50,4 +50,14 @@ export class FirebaseService {
     const snapshot = await getDocs(profilesRef);
     return snapshot.docs.map(doc => doc.data() as UserProfile);
   }
+
+  async saveMatch(fromUid: string, toUid: string): Promise<void> {
+    const matchRef = doc(this.firestore, 'matches', `${fromUid}_${toUid}`);
+    await setDoc(matchRef, {
+      from: fromUid,
+      to: toUid,
+      timestamp: new Date().toISOString()
+    });
+  }
+
 }

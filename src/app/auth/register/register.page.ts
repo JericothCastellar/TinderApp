@@ -20,6 +20,12 @@ export class RegisterPage {
   selectedImage: string | null = null;
   selectedFile: File | null = null;
 
+  availablePassions: string[] = [
+    'Harry Potter', 'Music', 'Video games', 'Camping', 'Beer', 'Yoga', 'Running',
+    'Travel', 'Instagram', 'Gym', 'J-Pop', 'K-Pop', 'Skating', 'Reading', 'Lo-Fi',
+    'Backpacking', 'Football', 'Books', 'Hiking', 'Meme', 'Cooking'
+  ];
+
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -37,8 +43,16 @@ export class RegisterPage {
       city: ['', Validators.required],
       gender: ['', Validators.required],
       showGenderProfile: [true],
-      passions: ['']
+      passions: [[]] 
     });
+  }
+
+  togglePassion(passion: string) {
+    const current = this.form.value.passions || [];
+    const updated = current.includes(passion)
+      ? current.filter((p: string) => p !== passion)
+      : [...current, passion];
+    this.form.patchValue({ passions: updated });
   }
 
   async selectImageMobile() {
@@ -73,8 +87,8 @@ export class RegisterPage {
       const user = await this.auth.register(email, password);
       const userId = user.uid;
 
-      const passions = profileData.passions
-        ? profileData.passions.split(',').map((p: string) => ({ category: p.trim() }))
+      const passions = Array.isArray(profileData.passions)
+        ? profileData.passions.map((p: string) => ({ category: p }))
         : [];
 
       let photoUrl = '';
