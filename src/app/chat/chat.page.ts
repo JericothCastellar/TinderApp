@@ -12,10 +12,11 @@ export class ChatPage implements OnInit {
   messages: Message[] = [];
   currentUserId: string | null = null;
 
+  constructor(private auth: AuthService) {}
+
   ngOnInit(): void {
     this.currentUserId = this.auth.currentUserId;
 
-    // Mensajes simulados
     this.messages = [
       {
         senderUid: this.currentUserId!,
@@ -31,6 +32,4 @@ export class ChatPage implements OnInit {
       }
     ];
   }
-
-  constructor(private auth: AuthService) {}
 }

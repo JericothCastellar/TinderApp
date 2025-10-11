@@ -1,14 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Chat</ion-title>
+  <ion-toolbar class="chat-toolbar">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home" class="back-button">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="chat-title">Chat</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div *ngFor="let msg of messages">
-    <div [ngClass]="msg.senderUid === currentUserId ? 'sent' : 'received'">
-      <p>{{ msg.text }}</p>
-      <small>{{ msg.timestamp | date:'shortTime' }}</small>
+<ion-content class="chat-content">
+  <div class="chat-container">
+    <div *ngFor="let msg of messages" class="message-wrapper">
+      <div [ngClass]="msg.senderUid === currentUserId ? 'sent' : 'received'">
+        <p class="message-text">{{ msg.text }}</p>
+        <span class="message-time">{{ msg.timestamp | date:'shortTime' }}</span>
+      </div>
     </div>
   </div>
 </ion-content>

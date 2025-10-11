@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserProfile } from 'src/app/shared/models/user.model';
@@ -12,6 +12,12 @@ import { UserProfile } from 'src/app/shared/models/user.model';
 })
 export class UpdatePage implements OnInit {
   form: FormGroup;
+  nameControl!: FormControl;
+  lastNameControl!: FormControl;
+  birthDateControl!: FormControl;
+  countryControl!: FormControl;
+  cityControl!: FormControl;
+
   loading = false;
   errorMessage: string | null = null;
 
@@ -34,8 +40,14 @@ export class UpdatePage implements OnInit {
       city: ['', Validators.required],
       gender: ['', Validators.required],
       showGenderProfile: [true],
-      passions: [[]] 
+      passions: [[]]
     });
+
+    this.nameControl = this.form.get('name') as FormControl;
+    this.lastNameControl = this.form.get('lastName') as FormControl;
+    this.birthDateControl = this.form.get('birthDate') as FormControl;
+    this.countryControl = this.form.get('country') as FormControl;
+    this.cityControl = this.form.get('city') as FormControl;
   }
 
   async ngOnInit() {
@@ -93,7 +105,7 @@ export class UpdatePage implements OnInit {
       uid,
       ...raw,
       passions,
-      photos: [] 
+      photos: []
     };
 
     try {

@@ -1,66 +1,91 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
-</ion-header>
+  <ion-content class="register-content">
+    <div class="register-container">
+      <h1>Registro</h1>
+      <p class="subtitle">Crea tu cuenta para comenzar</p>
 
-<ion-content>
-  <form [formGroup]="form" (ngSubmit)="onRegister()" class="ion-padding">
-    <ion-item><ion-input formControlName="email" placeholder="Email" type="email"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="password" placeholder="Contraseña" type="password"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="name" placeholder="Nombre"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="lastName" placeholder="Apellido"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="birthDate" type="date"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="country" placeholder="País"></ion-input></ion-item>
-    <ion-item><ion-input formControlName="city" placeholder="Ciudad"></ion-input></ion-item>
-    <ion-item>
-      <ion-select formControlName="gender" placeholder="Género">
-        <ion-select-option value="female">Femenino</ion-select-option>
-        <ion-select-option value="male">Masculino</ion-select-option>
-        <ion-select-option value="other">Otro</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-checkbox formControlName="showGenderProfile">Mostrar género en perfil</ion-checkbox>
-    </ion-item>
+      <form [formGroup]="form" (ngSubmit)="onRegister()">
+        <shared-input [control]="emailControl" placeholder="Email" type="email"></shared-input>
+        <shared-input [control]="passwordControl" placeholder="Contraseña" type="password"></shared-input>
+        <shared-input [control]="nameControl" placeholder="Nombre"></shared-input>
+        <shared-input [control]="lastNameControl" placeholder="Apellido"></shared-input>
+        <shared-input [control]="countryControl" placeholder="País"></shared-input>
+        <shared-input [control]="cityControl" placeholder="Ciudad"></shared-input>
+<shared-input
+  [control]="birthDateControl"
+  placeholder="Fecha de nacimiento"
+  type="date"
+></shared-input>
 
-    <ion-item>
-      <ion-label>Pasiones</ion-label>
-    </ion-item>
-    <ion-chip *ngFor="let passion of availablePassions"
-              [outline]="true"
-              [color]="form.value.passions.includes(passion) ? 'primary' : 'medium'"
-              (click)="togglePassion(passion)">
-      <ion-label>{{ passion }}</ion-label>
-    </ion-chip>
 
-    <ion-item>
-      <ion-button expand="full" (click)="selectImageMobile()">Seleccionar imagen (Android)</ion-button>
-    </ion-item>
+        <div class="gender-select-wrapper">
+          <ion-select formControlName="gender" placeholder="Género">
+            <ion-select-option value="female">Femenino</ion-select-option>
+            <ion-select-option value="male">Masculino</ion-select-option>
+            <ion-select-option value="other">Otro</ion-select-option>
+          </ion-select>
+        </div>
 
-    <ion-item>
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
-    </ion-item>
+        <div class="checkbox-wrapper">
+          <ion-checkbox formControlName="showGenderProfile"></ion-checkbox>
+          <label class="checkbox-label">Mostrar género en perfil</label>
+        </div>
 
-    <ion-item *ngIf="selectedImage">
-      <ion-thumbnail slot="start">
-        <img [src]="selectedImage" />
-      </ion-thumbnail>
-      <ion-label>Imagen seleccionada</ion-label>
-    </ion-item>
+        <div class="passion-wrapper">
+          <label class="section-label">Pasiones</label>
+          <passion-selector
+            [passions]="availablePassions"
+            [selected]="form.value.passions"
+            (toggle)="togglePassion($event)"
+          ></passion-selector>
+        </div>
 
-    <ion-text color="danger" *ngIf="errorMessage">
-      <p>{{ errorMessage }}</p>
-    </ion-text>
+        <ion-button expand="full" class="select-image-button" (click)="selectImageMobile()">
+          Seleccionar imagen (Android)
+        </ion-button>
 
-    <ion-button expand="full" type="submit" [disabled]="form.invalid || loading">
-      Registrarse
-    </ion-button>
+        <div class="file-upload-wrapper">
+          <ion-button expand="full" class="file-upload-button" (click)="fileInput.click()">
+            Seleccionar archivo
+          </ion-button>
+          <input
+            type="file"
+            accept="image/*"
+            #fileInput
+            (change)="onFileSelected($event)"
+            hidden
+          />
+        </div>
 
-    <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
-  </form>
+        <div class="image-preview-wrapper" *ngIf="selectedImage">
+          <ion-thumbnail>
+            <img [src]="selectedImage" />
+          </ion-thumbnail>
+          <p class="image-label">Imagen seleccionada</p>
+        </div>
 
-  <ion-button expand="full" fill="outline" color="medium" routerLink="/login" class="ion-margin-top">
-    ¿Ya tienes cuenta? Inicia sesión
-  </ion-button>
-</ion-content>
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p class="error-message">{{ errorMessage }}</p>
+        </ion-text>
+
+        <shared-button
+          label="Registrarse"
+          [disabled]="form.invalid || loading"
+          type="submit"
+          class="ion-margin-top"
+          (action)="onRegister()"
+        ></shared-button>
+
+        <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
+      </form>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="medium"
+        routerLink="/login"
+        class="ion-margin-top register-link"
+      >
+        ¿Ya tienes cuenta? Inicia sesión
+      </ion-button>
+    </div>
+  </ion-content>

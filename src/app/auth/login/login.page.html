@@ -1,31 +1,44 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="login-content">
+  <div class="login-container">
+    <h1>Bienvenido al de vuelta</h1>
+    <p class="subtitle">Inicia sesion para continuar</p>
 
-<ion-content>
-  <form [formGroup]="form" (ngSubmit)="onLogin()" class="ion-padding">
-    <ion-item>
-      <ion-input formControlName="email" placeholder="Email" type="email"></ion-input>
-    </ion-item>
+    <form [formGroup]="form" (ngSubmit)="onLogin()">
+      <shared-input
+        [control]="emailControl"
+        placeholder="Email"
+        type="email"
+      ></shared-input>
 
-    <ion-item>
-      <ion-input formControlName="password" placeholder="Password" type="password"></ion-input>
-    </ion-item>
+      <shared-input
+        [control]="passwordControl"
+        placeholder="Password"
+        type="password"
+      ></shared-input>
 
-    <ion-text color="danger" *ngIf="errorMessage">
-      <p class="ion-padding">{{ errorMessage }}</p>
-    </ion-text>
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="error-message">{{ errorMessage }}</p>
+      </ion-text>
 
-    <ion-button expand="full" type="submit" [disabled]="form.invalid || loading">
-      Iniciar sesión
+      <shared-button
+        label="Iniciar sesión"
+        [disabled]="form.invalid || loading"
+        type="submit"
+        class="ion-margin-top"
+        (action)="onLogin()"
+      ></shared-button>
+
+      <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
+    </form>
+
+    <ion-button
+      expand="block"
+      fill="clear"
+      color="medium"
+      routerLink="/register"
+      class="register-link"
+    >
+      ¿No tienes cuenta? Regístrate
     </ion-button>
-
-    <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
-  </form>
-
-  <ion-button expand="full" fill="outline" color="medium" routerLink="/register" class="ion-margin-top">
-    ¿No tienes cuenta? Regístrate
-  </ion-button>
+  </div>
 </ion-content>

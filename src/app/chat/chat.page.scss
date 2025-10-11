@@ -1,15 +1,64 @@
+.chat-content {
+  --background: #fff;
+}
+
+.chat-toolbar {
+  --background: #fff;
+  --color: #222;
+  border-bottom: 1px solid #eee;
+}
+
+.chat-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #e6005c;
+}
+
+.back-button {
+  --color: #e6005c;
+  font-size: 20px;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
 .sent {
-  text-align: right;
+  align-self: flex-end;
   background-color: #d1e7dd;
-  padding: 8px;
-  margin: 6px;
-  border-radius: 10px;
+  border-radius: 12px;
+  padding: 10px 14px;
+  max-width: 80%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .received {
-  text-align: left;
+  align-self: flex-start;
   background-color: #f8d7da;
-  padding: 8px;
-  margin: 6px;
-  border-radius: 10px;
+  border-radius: 12px;
+  padding: 10px 14px;
+  max-width: 80%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-text {
+  font-size: 15px;
+  color: #222;
+  margin: 0;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  display: block;
+  text-align: right;
 }

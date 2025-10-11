@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { UpdatePageRoutingModule } from './update-routing.module';
 import { UpdatePage } from './update.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { UpdatePage } from './update.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    UpdatePageRoutingModule
+    UpdatePageRoutingModule,
+    SharedModule
   ],
   declarations: [UpdatePage]
 })

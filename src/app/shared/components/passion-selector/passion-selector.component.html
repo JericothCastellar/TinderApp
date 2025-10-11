@@ -1,0 +1,9 @@
+
+<ion-chip
+  *ngFor="let passion of passions"
+  [outline]="true"
+  [color]="isSelected(passion) ? 'primary' : 'medium'"
+  (click)="onToggle(passion)"
+>
+  <ion-label>{{ passion }}</ion-label>
+</ion-chip>

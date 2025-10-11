@@ -1,35 +1,46 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Matching</ion-title>
+  <ion-toolbar class="matching-toolbar">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home" class="back-button">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="matching-title">Matching</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ng-container *ngIf="profiles.length > 0">
-    <ion-card>
-      <img [src]="profiles[currentIndex].photos[0]" />
-      <ion-card-header>
-        <ion-card-title>
+<ion-content class="matching-content">
+  <div class="matching-container">
+    <ng-container *ngIf="profiles.length > 0">
+      <div class="profile-wrapper">
+        <div class="image-container">
+          <img [src]="profiles[currentIndex].photos[0]" class="profile-image" />
+        </div>
+
+        <h2 class="profile-name">
           {{ profiles[currentIndex].name }}
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-chip *ngFor="let passion of profiles[currentIndex].passions">
-          {{ passion.category }}
-        </ion-chip>
-        <ion-button expand="full" color="danger" (click)="onMatch(profiles[currentIndex])">
+        </h2>
+
+        <div class="passion-chips">
+          <ion-chip *ngFor="let passion of profiles[currentIndex].passions">
+            {{ passion.category }}
+          </ion-chip>
+        </div>
+
+        <ion-button expand="full" class="match-button" (click)="onMatch(profiles[currentIndex])">
           ♥ Me gusta
         </ion-button>
-        <ion-button expand="full" fill="outline" (click)="nextSlide()">
+
+        <ion-button expand="full" fill="outline" class="next-button" (click)="nextSlide()">
           Siguiente
         </ion-button>
-      </ion-card-content>
-    </ion-card>
-  </ng-container>
+      </div>
+    </ng-container>
 
-  <ng-container *ngIf="profiles.length === 0">
-    <ion-text color="medium">
-      <p class="ion-padding">No hay perfiles disponibles.</p>
-    </ion-text>
-  </ng-container>
+    <ng-container *ngIf="profiles.length === 0">
+      <ion-text color="medium">
+        <p class="no-profiles">No hay perfiles disponibles.</p>
+      </ion-text>
+    </ng-container>
+  </div>
 </ion-content>

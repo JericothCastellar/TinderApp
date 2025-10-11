@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
   selector: 'app-welcome',
   standalone: false,
   templateUrl: './welcome.page.html',
-  styleUrls: ['./welcome.page.scss']
+  styleUrls: ['./welcome.page.scss'],
 })
 export class WelcomePage {
   constructor(private router: Router) {}
 
-  onAgree() {
+  onContinue() {
     this.router.navigate(['/login']);
   }
 }

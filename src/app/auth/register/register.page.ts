@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { FirebaseService } from 'src/app/core/services/firebase.service';
 import { SupabaseImageService } from 'src/app/core/services/supabase-image.service';
@@ -19,6 +19,14 @@ export class RegisterPage {
   loading = false;
   selectedImage: string | null = null;
   selectedFile: File | null = null;
+
+  emailControl!: FormControl;
+  passwordControl!: FormControl;
+  nameControl!: FormControl;
+  lastNameControl!: FormControl;
+  birthDateControl!: FormControl;
+  countryControl!: FormControl;
+  cityControl!: FormControl;
 
   availablePassions: string[] = [
     'Harry Potter', 'Music', 'Video games', 'Camping', 'Beer', 'Yoga', 'Running',
@@ -43,8 +51,16 @@ export class RegisterPage {
       city: ['', Validators.required],
       gender: ['', Validators.required],
       showGenderProfile: [true],
-      passions: [[]] 
+      passions: [[]]
     });
+
+    this.emailControl = this.form.get('email') as FormControl;
+    this.passwordControl = this.form.get('password') as FormControl;
+    this.nameControl = this.form.get('name') as FormControl;
+    this.lastNameControl = this.form.get('lastName') as FormControl;
+    this.birthDateControl = this.form.get('birthDate') as FormControl;
+    this.countryControl = this.form.get('country') as FormControl;
+    this.cityControl = this.form.get('city') as FormControl;
   }
 
   togglePassion(passion: string) {

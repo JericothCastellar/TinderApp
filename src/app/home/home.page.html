@@ -1,23 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
+  <ion-toolbar class="home-toolbar">
+    <ion-title class="home-title">Inicio</ion-title>
     <ion-buttons slot="end">
-      <ion-avatar class="profile-avatar" *ngIf="user?.photos?.length">
-        <img [src]="user?.photos?.[0]" />
+      <ion-avatar class="profile-avatar" *ngIf="profileImageUrl && profileImageUrl !== ''">
+        <img [src]="profileImageUrl" alt="Avatar" />
       </ion-avatar>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h2>Bienvenido</h2>
-  <p *ngIf="email">Tu sesión: {{ email }}</p>
+<ion-content class="home-content">
+  <div class="home-container">
+    <h1 class="welcome-title">Bienvenido</h1>
+    <p class="session-info" *ngIf="email">Tu sesión: {{ email }}</p>
 
-  <ion-button expand="full" routerLink="/profile">Ir a mi perfil</ion-button>
-  <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
-  <ion-button expand="full" routerLink="/matching">Ir a Matching</ion-button>
+    <ion-button expand="full" routerLink="/profile" class="home-button">
+      Ir a mi perfil
+    </ion-button>
 
-  <ion-button expand="full" color="primary" *ngIf="hasChat" routerLink="/chat">
-    Ir al Chat
-  </ion-button>
+    <ion-button expand="full" routerLink="/matching" class="home-button">
+      Ir a Matching
+    </ion-button>
+
+    <ion-button
+      expand="full"
+      color="primary"
+      *ngIf="hasChat"
+      routerLink="/chat"
+      class="home-button"
+    >
+      Ir al Chat
+    </ion-button>
+
+    <ion-button expand="full" class="logout-button" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Cerrar sesión
+    </ion-button>
+  </div>
 </ion-content>

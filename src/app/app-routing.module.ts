@@ -34,10 +34,12 @@ const routes: Routes = [
     path: 'matching',
     loadChildren: () => import('./pages/matching/matching.module').then( m => m.MatchingPageModule),
     canActivate: [AuthGuard]
+    
   },
   {
     path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -1,60 +1,62 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Actualizar Perfil</ion-title>
+  <ion-toolbar class="update-toolbar">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home" class="back-button">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="update-title">Actualizar Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="form" (ngSubmit)="onSave()" class="ion-padding">
+<ion-content class="update-content">
+  <div class="update-container">
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <shared-input [control]="nameControl" placeholder="Nuevo nombre"></shared-input>
+      <shared-input [control]="lastNameControl" placeholder="Nuevo apellido"></shared-input>
+      <shared-input [control]="birthDateControl" placeholder="Fecha de nacimiento" type="date"></shared-input>
+      <shared-input [control]="countryControl" placeholder="Nuevo país"></shared-input>
+      <shared-input [control]="cityControl" placeholder="Nueva ciudad"></shared-input>
 
-    <ion-label>Nombre actual: {{ form.get('name')?.value }}</ion-label>
-    <ion-item><ion-input formControlName="name" placeholder="Nuevo nombre"></ion-input></ion-item>
+      <div class="gender-select-wrapper">
+        <ion-select formControlName="gender" placeholder="Nuevo género">
+          <ion-select-option value="female">Femenino</ion-select-option>
+          <ion-select-option value="male">Masculino</ion-select-option>
+          <ion-select-option value="other">Otro</ion-select-option>
+        </ion-select>
+      </div>
 
-    <ion-label>Apellido actual: {{ form.get('lastName')?.value }}</ion-label>
-    <ion-item><ion-input formControlName="lastName" placeholder="Nuevo apellido"></ion-input></ion-item>
+      <div class="checkbox-wrapper">
+        <ion-checkbox formControlName="showGenderProfile"></ion-checkbox>
+        <label class="checkbox-label">Mostrar género en perfil</label>
+      </div>
 
-    <ion-label>Fecha de nacimiento actual: {{ form.get('birthDate')?.value }}</ion-label>
-    <ion-item><ion-input formControlName="birthDate" type="date"></ion-input></ion-item>
+      <div class="passion-wrapper">
+        <label class="section-label">Pasiones actuales:</label>
+        <p class="passion-list">{{ form.value.passions.join(', ') }}</p>
 
-    <ion-label>País actual: {{ form.get('country')?.value }}</ion-label>
-    <ion-item><ion-input formControlName="country" placeholder="Nuevo país"></ion-input></ion-item>
+        <label class="section-label">Selecciona nuevas pasiones:</label>
+        <passion-selector
+          [passions]="availablePassions"
+          [selected]="form.value.passions"
+          (toggle)="togglePassion($event)"
+        ></passion-selector>
+      </div>
 
-    <ion-label>Ciudad actual: {{ form.get('city')?.value }}</ion-label>
-    <ion-item><ion-input formControlName="city" placeholder="Nueva ciudad"></ion-input></ion-item>
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="error-message">{{ errorMessage }}</p>
+      </ion-text>
 
-    <ion-label>Género actual: {{ form.get('gender')?.value }}</ion-label>
-    <ion-item>
-      <ion-select formControlName="gender" placeholder="Nuevo género">
-        <ion-select-option value="female">Femenino</ion-select-option>
-        <ion-select-option value="male">Masculino</ion-select-option>
-        <ion-select-option value="other">Otro</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-button
+        expand="full"
+        class="save-button"
+        type="submit"
+        [disabled]="form.invalid || loading"
+      >
+        Guardar Perfil
+      </ion-button>
 
-    <ion-label>Mostrar género en perfil: {{ form.get('showGenderProfile')?.value ? 'Sí' : 'No' }}</ion-label>
-    <ion-item>
-      <ion-checkbox formControlName="showGenderProfile">Mostrar género en perfil</ion-checkbox>
-    </ion-item>
-
-    <ion-label>Pasiones actuales:</ion-label>
-    <ion-text>{{ form.value.passions.join(', ') }}</ion-text>
-
-    <ion-label class="ion-margin-top">Selecciona nuevas pasiones:</ion-label>
-    <ion-chip *ngFor="let passion of availablePassions"
-              [outline]="true"
-              [color]="form.value.passions.includes(passion) ? 'primary' : 'medium'"
-              (click)="togglePassion(passion)">
-      <ion-label>{{ passion }}</ion-label>
-    </ion-chip>
-
-    <ion-text color="danger" *ngIf="errorMessage">
-      <p>{{ errorMessage }}</p>
-    </ion-text>
-
-    <ion-button expand="full" type="submit" [disabled]="form.invalid || loading">
-      Guardar Perfil
-    </ion-button>
-
-    <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
-  </form>
+      <ion-spinner *ngIf="loading" name="dots" class="ion-margin-top"></ion-spinner>
+    </form>
+  </div>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -14,11 +14,19 @@ export class LoginPage {
   errorMessage: string | null = null;
   loading = false;
 
+  // ✅ Propiedades explícitas para evitar TS2739
+  emailControl: FormControl;
+  passwordControl: FormControl;
+
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+
+
+    this.emailControl = this.form.get('email') as FormControl;
+    this.passwordControl = this.form.get('password') as FormControl;
   }
 
   async onLogin() {

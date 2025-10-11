@@ -1,0 +1,164 @@
+.register-content {
+  --background: #fff;
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 48px 24px 24px;
+  height: 100%;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #e6005c;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.checkbox-wrapper {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  ion-checkbox {
+    --checkbox-size: 20px;
+    --border-color: #ccc;
+    --background: #fff;
+  }
+  .checkbox-label {
+    font-size: 15px;
+    color: #222;
+  }
+}
+
+.date-wrapper {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.date-picker {
+  width: 100%;
+  --background: #fff;
+  --color: #111;
+  --border-radius: 6px;
+  --border-color: #ccc;
+  font-size: 16px;
+}
+
+.passion-wrapper {
+  margin-top: 24px;
+}
+
+ion-chip {
+  margin: 4px 4px 0 0;
+  font-size: 14px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --background: #f4f4f4;
+}
+
+.select-image-button {
+  margin-top: 16px;
+  font-size: 15px;
+  --background: #e6005c;
+  --color: #fff;
+  --border-radius: 6px;
+  width: 100%;
+}
+
+.file-upload-wrapper {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.file-upload-button {
+  font-size: 15px;
+  --background: #e6005c;
+  --color: #fff;
+  --border-radius: 6px;
+  width: 100%;
+}
+
+.image-preview-wrapper {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  ion-thumbnail {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .image-label {
+    font-size: 14px;
+    color: #222;
+  }
+}
+
+.register-link {
+  font-size: 15px;
+  text-align: center;
+  margin-top: 32px;
+}
+
+.error-message {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.gender-select-wrapper {
+  margin-top: 12px;
+  width: 100%;
+}
+
+ion-select {
+  font-size: 16px;
+  color: #111;
+  width: 100%;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --background: #fff;
+  --border-radius: 6px;
+  --border-color: #ccc;
+  --min-height: 48px;
+}
+
+ion-select::part(placeholder) {
+  color: #666;
+  font-weight: 500;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: transparent;
+  color: #000;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  filter: brightness(0) saturate(100%);
+}

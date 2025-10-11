@@ -1,0 +1,52 @@
+.welcome-content {
+  --background: #ffffff;
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 48px 24px 24px;
+  height: 100%;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #e6005c;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rule h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.rule p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.5;
+}
+
+shared-button {
+  margin-top: auto;
+  align-self: center;
+  width: 100%;
+}
